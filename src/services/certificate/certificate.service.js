@@ -25,3 +25,7 @@ module.exports = function () {
     service.filter(filters);
   }
 };
+
+function createRA() {
+
+}

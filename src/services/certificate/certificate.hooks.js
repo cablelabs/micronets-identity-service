@@ -1,3 +1,4 @@
+const createCert = require('../../hooks/create-cert');
 
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [createCert()],
     update: [],
     patch: [],
     remove: []
