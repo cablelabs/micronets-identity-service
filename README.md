@@ -1,48 +1,26 @@
-# identity-service
+# Identity Service
 
 > 
 
 ## About
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+This is project is designed to create device specific x.509 certificates using a subscriber root certificate.  
 
-## Getting Started
+## Micronets Flow 
+This project serves as the Identity Server below. 
 
-Getting up and running is as easy as 1, 2, 3.
+![Micronets Sequence Diagram](./MicroNets-Sequence-Diagramsv5.png "Figure 1")
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
 
-    ```
-    cd path/to/identity-service; npm install
-    ```
 
-3. Start your app
+## API
+There are three major apis for the Indentify Service. 
 
-    ```
-    npm start
-    ```
+1. User/account management - /users 
+2. Requesting Cert Templates - /certificate-templates
+3. Requesting Certs for the Device - /certificates
 
-## Testing
 
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Scaffolding
-
-Feathers has a powerful command line interface. Here are a few things it can do:
-
-```
-$ npm install -g feathers-cli             # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers generate model                 # Generate a new Model
-$ feathers help                           # Show all commands
-```
-
-## Help
-
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
 
 ## Changelog
 
