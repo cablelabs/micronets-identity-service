@@ -6,7 +6,7 @@
 
 This is project is designed to create device specific x.509 certificates using a subscriber root certificate.  
 
-## Micronets Flow 
+## Micronets Device Registration Flow 
 This project serves as the Identity Server below. 
 
 ![Micronets Sequence Diagram](./MicroNets-Sequence-Diagramsv5.png "Figure 1")
