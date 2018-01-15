@@ -1,7 +1,6 @@
 // Initializes the `certificate` service on path `/certificates`
 const createService = require('feathers-mongodb');
 const hooks = require('./certificate.hooks');
-const filters = require('./certificate.filters');
 
 module.exports = function () {
   const app = this;
@@ -20,10 +19,6 @@ module.exports = function () {
   });
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };
 
 function createRA() {

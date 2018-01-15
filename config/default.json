@@ -1,4 +1,5 @@
 {
+  "keyType": "RSA:2048",
   "host": "localhost",
   "port": 3030,
   "public": "../public/",

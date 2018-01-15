@@ -1,21 +1,20 @@
-// Initializes the `users` service on path `/users`
+// Initializes the `certificate-template` service on path `/certificate-templates`
 const createService = require('feathers-mongodb');
-const hooks = require('./users.hooks');
+const hooks = require('./certificate-template.hooks');
 
-module.exports = function () {
-  const app = this;
+module.exports = function (app) {
   const paginate = app.get('paginate');
   const mongoClient = app.get('mongoClient');
   const options = { paginate };
 
   // Initialize our service with any options it requires
-  app.use('/users', createService(options));
+  app.use('/certificate-templates', createService(options));
 
   // Get our initialized service so that we can register hooks and filters
-  const service = app.service('users');
+  const service = app.service('certificate-templates');
 
   mongoClient.then(db => {
-    service.Model = db.collection('users');
+    service.Model = db.collection('certificate-template');
   });
 
   service.hooks(hooks);
