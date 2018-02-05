@@ -8,7 +8,12 @@ var path = require('path');
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function createCert (hook) {
     // Read CSR
-    var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
+    console.log(hook.data);
+
+    // var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
+    var csrPem = hook.data.data;
+
+
     var csr = forge.pki.certificationRequestFromPem(csrPem);
 
 // Read CA cert and key
