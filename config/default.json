@@ -1,5 +1,5 @@
 {
-  "keyType": "RSA:2048",
+  "keyType": "ECC:256",
   "host": "localhost",
   "port": 3030,
   "public": "../public/",
