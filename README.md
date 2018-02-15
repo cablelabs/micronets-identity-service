@@ -17,7 +17,7 @@ This project serves as the Identity Server below.
 There are three major apis for the Indentify Service. 
 
 1. User/account management - /users 
-2. Requesting Cert Templates - /certificate-templates
+2. Requesting Cert Templates - /csrt
 3. Requesting Certs for the Device - /certificates
 
 

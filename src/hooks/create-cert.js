@@ -11,7 +11,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     console.log(hook.data);
 
     // var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
-    var csrPem = hook.data.data;
+    var csrPem = hook.data.csr;
 
 
     var csr = forge.pki.certificationRequestFromPem(csrPem);
@@ -69,7 +69,30 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     console.log('\nWriting Certificate');
 
-    hook.result = forge.pki.certificateToPem(cert);
+/*
+{
+  "subscriber": {
+	"id": 1,
+	"name": "Grandma",
+	"ssid": "Grandma's WiFi"
+  },
+  "wifiCert": "<base64 encoded WiFi Certificate>",
+  "caCert": "<base64 encoded CA Certificate>"
+}
+ */
+
+    var jsonBlob = {
+      subscriber: {
+        id: 1,
+        name: "Grandma",
+        ssid: "Grandma's Wifi"
+      },
+      wifiCert: forge.pki.certificateToPem(cert),
+      caCert: forge.pki.certificateToPem(caCert),
+    }
+
+    hook.result = jsonBlob
+
 
     return Promise.resolve(hook);
   };
