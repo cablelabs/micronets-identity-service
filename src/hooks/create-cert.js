@@ -82,11 +82,6 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
  */
 
     var jsonBlob = {
-      subscriber: {
-        id: 1,
-        name: "Grandma",
-        ssid: "Grandma's Wifi"
-      },
       wifiCert: forge.pki.certificateToPem(cert),
       caCert: forge.pki.certificateToPem(caCert),
     }
