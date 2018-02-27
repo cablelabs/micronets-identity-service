@@ -17,14 +17,15 @@ function execute(command) {
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return context => {
-    var csrPem = context.data.csr;
-        return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
+    var csrPem = Buffer.from(context.data.csr, 'base64');
+        return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial -out sandbox/temp.pem  -days 500 -sha256 ').then(result => {
           console.log(result)
           var caCertPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "ecc-ca.pem"));
+          var wifiCertPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "temp.pem"));
 
           var jsonBlob = {
-            wifiCert: result,
-            caCert: caCertPem.toString()
+            wifiCert: wifiCertPem.toString("base64"),
+            caCert: caCertPem.toString("base64")
           }
           context.result = jsonBlob
 
