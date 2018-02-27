@@ -6,7 +6,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [createCert()],
+    create: [],
     update: [],
     patch: [],
     remove: []
@@ -16,7 +16,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [createCert()],
     update: [],
     patch: [],
     remove: []

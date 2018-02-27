@@ -3,92 +3,50 @@
 var forge = require('node-forge');
 var fs = require('fs');
 var path = require('path');
+var cmd = require('node-cmd')
 
+
+function execute(command) {
+  return new Promise((resolve, reject) => {
+    cmd.get(command, (err, resp, stderr) => {
+      if (err) return reject(err)
+      return resolve(resp)
+    })
+  })
+}
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
-  return function createCert (hook) {
-    // Read CSR
-    console.log(hook.data);
+  return context => {
+    var csrPem = context.data.csr;
+        return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
+          console.log(result)
+          var caCertPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "ecc-ca.pem"));
 
-    // var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
-    var csrPem = hook.data.csr;
+          var jsonBlob = {
+            wifiCert: result,
+            caCert: caCertPem.toString()
+          }
+          context.result = jsonBlob
 
-
-    var csr = forge.pki.certificationRequestFromPem(csrPem);
-
-// Read CA cert and key
-    var caCertPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "ca.pem"));
-    var caKeyPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "ca.key"));
-    var caCert = forge.pki.certificateFromPem(caCertPem);
-    var caKey = forge.pki.privateKeyFromPem(caKeyPem);
-
-    if (csr.verify()) {
-      console.log('Certification request (CSR) verified.');
-    } else {
-      throw new Error('Signature not verified.');
-    }
-
-
-    console.log('Creating certificate...');
-    var cert = forge.pki.createCertificate();
-    cert.serialNumber = '02';
-
-    cert.validity.notBefore = new Date();
-    cert.validity.notAfter = new Date();
-    cert.validity.notAfter.setFullYear(cert.validity.notBefore.getFullYear() + 1);
-
-
-// subject from CSR
-    cert.setSubject(csr.subject.attributes);
-// issuer from CA
-    cert.setIssuer(caCert.subject.attributes);
-
-    cert.setExtensions([{
-      name: 'basicConstraints',
-      cA: true
-    }, {
-      name: 'keyUsage',
-      keyCertSign: true,
-      digitalSignature: true,
-      nonRepudiation: true,
-      keyEncipherment: true,
-      dataEncipherment: true
-    }, {
-      name: 'subjectAltName',
-      altNames: [{
-        type: 6, // URI
-        value: 'http://example.org/webid#me'
-      }]
-    }]);
-
-    cert.publicKey = csr.publicKey;
-
-
-    cert.sign(caKey);
-    console.log('Certificate created.');
-
-    console.log('\nWriting Certificate');
-
-/*
-{
-  "subscriber": {
-	"id": 1,
-	"name": "Grandma",
-	"ssid": "Grandma's WiFi"
-  },
-  "wifiCert": "<base64 encoded WiFi Certificate>",
-  "caCert": "<base64 encoded CA Certificate>"
-}
- */
-
-    var jsonBlob = {
-      wifiCert: forge.pki.certificateToPem(cert),
-      caCert: forge.pki.certificateToPem(caCert),
-    }
-
-    hook.result = jsonBlob
-
-
-    return Promise.resolve(hook);
+        })
   };
 };
+
+
+//
+//   return function createCert(hook) {
+//
+//     // Read CSR
+//     // console.log(hook.data);
+//
+//     // var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
+//     var csrPem = hook.data.csr;
+//     return execute('echo \"' + csrPem + '\" | openssl req -text -noout -verify ')
+//       .then(function () {
+//         execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
+//           console.log(result)
+//           hook.result = result
+//         })
+//       })
+//   }
+// };
