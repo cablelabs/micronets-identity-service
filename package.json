@@ -25,7 +25,10 @@
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "start": "node src/",
-    "mocha": "mocha test/ --recursive"
+    "mocha": "mocha test/ --recursive",
+    "docker-build": "docker build -t code.cablelabs.com:4567/micronets/identity-service .",
+    "docker-compose": "docker-compose build",
+    "docker-publish": "docker login code.cablelabs.com:4567; docker push code.cablelabs.com:4567/micronets/identity-service"
   },
   "dependencies": {
     "@feathersjs/authentication": "^2.1.1",

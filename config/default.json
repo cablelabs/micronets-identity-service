@@ -1,13 +1,13 @@
 {
   "keyType": "ECC:256",
   "host": "localhost",
-  "port": 3030,
+  "port": 3220,
   "public": "../public/",
   "paginate": {
     "default": 10,
     "max": 50
   },
-  "mongodb": "mongodb://localhost:27017/identity_service",
+  "mongodb": "mongodb://mongo:27017/identity_service",
   "authentication": {
     "secret": "ac8d6019b59fc20e9572c1da14ec88d69c3eaf21a2807ffc94c46dc9837115a3eb14c3f7b0cb45af023daaa584237162396576f0c35c987e20129c1599ded1deb3da80ba3be4f981c9405b4cf42e08e54e2ffddb4ed8b4d0980a5839fc59a186c1c467d729cc8daf8966c2a82baf42b19b8ac1ca76d81ec0251c4837bd48ea0e95fa4074c8e679f2d1b64e6f718c207c44442f07c8bc1312c77211defeec2828c489c0fb20225e9f49313f1464e245ca8a20cbc7988f74a541aae8fbec4d1f519aef73357d450f65befadb53273c3ce3fde70f15ab73fba0eea23d64cb964d754531daa2aefaff6325a048ce0ddda50a9e40c27f8b52c6d5424922f810835a8e",
     "strategies": [
