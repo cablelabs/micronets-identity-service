@@ -1,15 +1,15 @@
-version: "3"
+version: "2"
 services:
   identity:
     image: code.cablelabs.com:4567/micronets/identity-service
     build: .
     ports:
-      - "3220:3220"
+      - "3230:3230"
     links:
       - mongo
+
   mongo:
     image: mongo
-    volumes:
-      - /data/mongodb/db:/data/db
+    command: mongod --port 27018
     ports:
-      - "27017:27017"
+      - "27018:27018"
