@@ -22,6 +22,8 @@ const mongodb = require('./mongodb');
 
 const authentication = require('./authentication');
 
+const mongoose = require('./mongoose');
+
 const app = express(feathers());
 
 // Load app configuration
@@ -39,6 +41,8 @@ app.use('/', express.static(app.get('public')));
 app.configure(mongodb);
 app.configure(rest());
 app.configure(socketio());
+
+app.configure(mongoose);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
