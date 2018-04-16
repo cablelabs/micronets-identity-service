@@ -18,10 +18,11 @@ function execute(command) {
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return context => {
     var csrPem = Buffer.from(context.data.csr, 'base64');
-        return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial -out sandbox/temp.pem  -days 500 -sha256 ').then(result => {
+        return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA ssl/ec-server.pem -CAkey ssl/ec-key.pem -CAcreateserial -out ssl/temp.pem  -days 500 -sha256 ')
+          .then(result => {
           console.log(result)
-          var caCertPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "ecc-ca.pem"));
-          var wifiCertPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "temp.pem"));
+          var caCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "ec-server.pem"));
+          var wifiCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "temp.pem"));
 
           var jsonBlob = {
             wifiCert: wifiCertPem.toString("base64"),
@@ -40,11 +41,11 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 //     // Read CSR
 //     // console.log(hook.data);
 //
-//     // var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
+//     // var csrPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "micronet.csr"));
 //     var csrPem = hook.data.csr;
 //     return execute('echo \"' + csrPem + '\" | openssl req -text -noout -verify ')
 //       .then(function () {
-//         execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
+//         execute('echo \"' + csrPem + '\" | openssl x509 -req -CA ssl/ecc-ca.pem -CAkey ssl/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
 //           console.log(result)
 //           hook.result = result
 //         })

@@ -14,13 +14,13 @@ function execute(command) {
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return context => {
     console.log(context.data);
-    execute('openssl ecparam -name prime256v1 -genkey -out sandbox/' + context.data.subscriberId + '-ec-key.pem')
+    execute('openssl ecparam -name prime256v1 -genkey -out ssl/ec-key.pem')
       .then((result) => {
         console.log(result);
-        execute('openssl req -new -key sandbox/' + context.data.subscriberId + '-ec-key.pem -out sandbox/' + context.data.subscriberId + '-ec-server.csr -subj \"/C=US/ST=CO/L=Louisville/O=Cablelabs/OU=Micronets/CN=Medical Services\"')
+        execute('openssl req -new -key ssl/ec-key.pem -out ssl/ec-server.csr -subj \"/C=US/ST=CO/L=Louisville/O=Cablelabs/OU=Micronets/CN=Medical Services\"')
           .then((result) => {
             console.log(result);
-            execute('openssl x509 -req -days 365 -in sandbox/' + context.data.subscriberId + '-ec-server.csr -signkey sandbox/' +  context.data.subscriberId + '-ec-key.pem -out sandbox/' + context.data.subscriberId + '-ec-server.pem')
+            execute('openssl x509 -req -days 365 -in ssl/ec-server.csr -signkey ssl/ec-key.pem -out ssl/ec-server.pem')
               .then((result) => {
                 console.log(result);
                 return;
@@ -48,11 +48,11 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 //     // Read CSR
 //     // console.log(hook.data);
 //
-//     // var csrPem = fs.readFileSync(path.join(__dirname, "../../sandbox/", "micronet.csr"));
+//     // var csrPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "micronet.csr"));
 //     var csrPem = hook.data.csr;
 //     return execute('echo \"' + csrPem + '\" | openssl req -text -noout -verify ')
 //       .then(function () {
-//         execute('echo \"' + csrPem + '\" | openssl x509 -req -CA sandbox/ecc-ca.pem -CAkey sandbox/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
+//         execute('echo \"' + csrPem + '\" | openssl x509 -req -CA ssl/ecc-ca.pem -CAkey ssl/ecc-ca-key.pem -CAcreateserial  -days 500 -sha256 ').then(result => {
 //           console.log(result)
 //           hook.result = result
 //         })
