@@ -1,0 +1,6 @@
+{
+  "host": "localhost",
+  "port": "3231",
+  "mongodb": "mongodb://mongo:27018/identity_service"
+
+}
