@@ -1,4 +1,3 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
 const getTemplate = require('../../hooks/get-template');
 
 module.exports = {

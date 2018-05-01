@@ -18,11 +18,8 @@ const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 
-const mongodb = require('./mongodb');
 
-const authentication = require('./authentication');
 
-const mongoose = require('./mongoose');
 
 const app = express(feathers());
 
@@ -38,15 +35,12 @@ app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
 
-app.configure(mongodb);
 app.configure(rest());
 app.configure(socketio());
 
-app.configure(mongoose);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
-app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Configure a middleware for 404s and the error handler
