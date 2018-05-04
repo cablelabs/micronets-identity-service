@@ -11,35 +11,57 @@ function execute(command) {
   })
 }
 
-module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
-  return context => {
-    console.log(context.data);
-    execute('openssl ecparam -name prime256v1 -genkey -out ssl/ec-key.pem')
-      .then((result) => {
-        console.log(result);
-        execute('openssl req -new -key ssl/ec-key.pem -out ssl/ec-server.csr -subj \"/C=US/ST=CO/L=Louisville/O=Cablelabs/OU=Micronets/CN=Medical Services\"')
-          .then((result) => {
-            console.log(result);
-            execute('openssl x509 -req -days 365 -in ssl/ec-server.csr -signkey ssl/ec-key.pem -out ssl/ec-server.pem')
-              .then((result) => {
-                console.log(result);
-                return;
-              })
-              .catch((err) => {
-                console.log(err);
-                return;
-            })
-          })
-          .catch((err) =>{
-            console.log(err);
-          })
 
+
+module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
+   return context => {
+    return execute('make --directory=./ssl/certs destroycerts ca server')
+      .then(() => {
+        console.log('CA certs created')
+        context.result = {
+          result: "CA certs created"
+        };
+        return context;
       })
       .catch((err) => {
         console.log(err);
+        context.result = {
+          error: err.toString()
+        }
+        return context;
       })
   };
 };
+
+// module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
+//   return context => {
+//     console.log(context.data);
+//     execute('openssl ecparam -name prime256v1 -genkey -out ssl/ec-key.pem')
+//       .then((result) => {
+//         console.log(result);
+//         execute('openssl req -new -key ssl/ec-key.pem -out ssl/ec-server.csr -subj \"/C=US/ST=CO/L=Louisville/O=Cablelabs/OU=Micronets/CN=Medical Services\"')
+//           .then((result) => {
+//             console.log(result);
+//             execute('openssl x509 -req -days 365 -in ssl/ec-server.csr -signkey ssl/ec-key.pem -out ssl/ec-server.pem')
+//               .then((result) => {
+//                 console.log(result);
+//                 return;
+//               })
+//               .catch((err) => {
+//                 console.log(err);
+//                 return;
+//             })
+//           })
+//           .catch((err) =>{
+//             console.log(err);
+//           })
+//
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       })
+//   };
+// };
 
 
 //

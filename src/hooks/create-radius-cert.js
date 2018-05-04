@@ -15,52 +15,24 @@ function execute(command) {
   })
 }
 
-
-
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return context => {
-    return execute('make --directory=./ssl/certs clean client')
-      .then((result) => {
-        console.log(result)
-          var caCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/certs", "ca.pem"));
-          var wifiCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/certs", "client.pem"));
-
-          console.log(wifiCertPem)
+    var csrPem = Buffer.from(context.data.csr, 'base64');
+        return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA ssl/ec-server.pem -CAkey ssl/ec-key.pem -CAcreateserial -out ssl/temp.pem  -days 500 -sha256 ')
+          .then(result => {
+          console.log(result)
+          var caCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "ec-server.pem"));
+          var wifiCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "temp.pem"));
 
           var jsonBlob = {
             wifiCert: wifiCertPem.toString("base64"),
             caCert: caCertPem.toString("base64")
           }
           context.result = jsonBlob
-      })
-      .catch((err) => {
-        console.log(err);
-        context.result = {
-          error: err.toString()
-        }
-        return context;
-      })
+
+        })
   };
 };
-//
-// module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
-//   return context => {
-//     var csrPem = Buffer.from(context.data.csr, 'base64');
-//         return execute('echo \"' + csrPem + '\" | openssl x509 -req -CA ssl/certs/ca.pem -CAkey ssl/certs/ca.key -CAcreateserial -out ssl/temp.pem  -days 500 -sha256 ')
-//           .then(result => {
-//           console.log(result)
-//           var caCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "ec-server.pem"));
-//           var wifiCertPem = fs.readFileSync(path.join(__dirname, "../../ssl/", "temp.pem"));
-//
-//           var jsonBlob = {
-//             wifiCert: wifiCertPem.toString("base64"),
-//             caCert: caCertPem.toString("base64")
-//           }
-//           context.result = jsonBlob
-//
-//         })
-//   };
-// };
 
 
 //

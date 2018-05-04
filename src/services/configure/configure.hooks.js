@@ -1,5 +1,6 @@
 
 const createConfig = require('../../hooks/create-configuration');
+const createRadiusConfig = require('../../hooks/create-radius-cert');
 
 module.exports = {
   before: {
