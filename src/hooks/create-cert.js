@@ -29,7 +29,8 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
           var jsonBlob = {
             wifiCert: wifiCertPem.toString("base64"),
-            caCert: caCertPem.toString("base64")
+            caCert: caCertPem.toString("base64"),
+            passphrase: 'whatever'
           }
           context.result = jsonBlob
       })
