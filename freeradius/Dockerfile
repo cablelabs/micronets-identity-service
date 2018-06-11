@@ -1,11 +1,14 @@
-# Create app directory
-WORKDIR /usr/sbin
+FROM ubuntu
 
-# Install app
-COPY /usr/sbin/freeradius .
+RUN apt-get update
+RUN apt-get dist-upgrade -y
 
-# Copy Configuration
-COPY /etc/freeradius /etc/freeradius
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install freeradius freeradius-mysql
 
-EXPOSE 1812
-CMD [ "freeradius" ]
+COPY ./3.0 /etc/freeradius
+EXPOSE 1812/udp 1813/udp 1812 1813
+
+# ENTRYPOINT radiusd
+CMD ["freeradius", "-X"]
