@@ -45,10 +45,11 @@ input_password		= whatever
 output_password		= whatever
 
 [server]
-countryName		= FR
-stateOrProvinceName	= Radius
-localityName		= Somewhere
-organizationName	= Example Inc.
-emailAddress		= admin@example.org
-commonName		= "Example Server Certificate"
+countryName		= US
+stateOrProvinceName	= CO
+localityName		= Louisville
+organizationName	= Cablelabs
+organizationalUnitName	= Micronets
+emailAddress		= micronets@cablelabs.com
+commonName		= "10.142.10.164"
 

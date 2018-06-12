@@ -47,12 +47,13 @@ output_password		= whatever
 x509_extensions		= v3_ca
 
 [certificate_authority]
-countryName		= FR
-stateOrProvinceName	= Radius
-localityName		= Somewhere
-organizationName	= Example Inc.
-emailAddress		= admin@example.org
-commonName		= "Example Certificate Authority"
+countryName= US
+stateOrProvinceName = CO
+localityName = Louisville
+commonName = Medical Device
+emailAddress = grandma@cablelabs.com
+organizationName	= Cablelabs
+organizationalUnitName	= Micronets
 
 [v3_ca]
 subjectKeyIdentifier	= hash
