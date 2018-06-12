@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install freeradius freeradius-mysql
 
-COPY ./3.0 /etc/freeradius
+COPY  3.0 /etc/freeradius/3.0
 EXPOSE 1812/udp 1813/udp 1812 1813
 
 # ENTRYPOINT radiusd
