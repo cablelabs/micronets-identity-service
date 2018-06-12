@@ -19,11 +19,11 @@ function execute(command) {
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return context => {
-    return execute('make --directory=/etc/freeradius/certs clean client')
+    return execute('make --directory=/etc/freeradius/3.0/certs clean client')
       .then((result) => {
         console.log(result)
-          var caCertPem = fs.readFileSync(path.join(__dirname, "/etc/freeradius/certs", "ca.pem"));
-          var wifiCertPem = fs.readFileSync(path.join(__dirname, "/etc/freeradius/certs", "client.pem"));
+          var caCertPem = fs.readFileSync(path.join(__dirname, "/etc/freeradius/3.0/certs", "ca.pem"));
+          var wifiCertPem = fs.readFileSync(path.join(__dirname, "/etc/freeradius/3.0/certs", "client.pem"));
 
           console.log(wifiCertPem)
 
