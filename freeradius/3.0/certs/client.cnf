@@ -45,9 +45,9 @@ input_password		= whatever
 output_password		= whatever
 
 [client]
-countryName		= FR
-stateOrProvinceName	= Radius
-localityName		= Somewhere
-organizationName	= Example Inc.
+countryName		= US
+stateOrProvinceName	= CO
+localityName		= Louisville
+organizationName	= Cablelabs
 emailAddress		= user@example.org
 commonName		= user@example.org
