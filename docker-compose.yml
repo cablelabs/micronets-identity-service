@@ -8,6 +8,8 @@ services:
         - freeradius
     ports:
       - "3230:3230"
+    volumes:
+      - ./freeradius/3.0:/etc/freeradius
 
   freeradius:
     image: freeradius
