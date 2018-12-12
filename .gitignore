@@ -1,3 +1,8 @@
+# Ignore files for micronets identity server
+freeradius/3.0/clients.conf
+freeradius/3.0/certs
+package-lock.json
+
 # Logs
 logs
 *.log
