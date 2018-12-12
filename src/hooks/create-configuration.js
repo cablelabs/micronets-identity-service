@@ -16,7 +16,7 @@ function execute(command) {
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
    return context => {
     // return execute('make --directory=./ssl/certs destroycerts ca server')
-    return execute('make --directory=/etc/freeradius/certs destroycerts ca server')
+    return execute('make --directory=/etc/freeradius/certs destroycerts dh ca server')
       .then(() => {
         console.log('CA certs created')
         context.result = {
