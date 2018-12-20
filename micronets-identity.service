@@ -1,0 +1,24 @@
+# To install and run this .service file:
+#   sudo systemctl enable $PWD/micronets-identity.service
+#   sudo systemctl daemon-reload 
+#   sudo systemctl start micronets-identity.service
+
+[Unit]
+Description=Micronets Identity Service
+After=network-online.target freeradius.service
+
+[Service]
+Type=idle
+# Note: These need to be modified to reflect the system location and installed virtualenv location
+WorkingDirectory=/home/micronets-dev/Projects/micronets/identity-service
+ExecStart=/usr/bin/npm run start
+User=micronets-dev
+Group=micronets-dev
+StandardOutput=syslog
+StandardError=syslog
+# SyslogFacility=none
+SyslogIdentifier=micronets-id
+SyslogLevel=debug
+
+[Install]
+WantedBy=multi-user.target
