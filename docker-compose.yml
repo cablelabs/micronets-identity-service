@@ -1,9 +1,16 @@
-version: "2"
+version: "3"
 services:
+  freeradius:
+    image: freeradius/freeradius-server
+    ports:
+        - "1812:1812"
+    volumes:
+        - ./freeradius/3.0:/etc/freeradius
   identity:
-    image: code.cablelabs.com:4567/micronets/identity-service
-    links:
-        - freeradius
+    build:
+          context: ./
+          dockerfile: Dockerfile
+    image: community.cablelabs.com:4567/micronets-docker/identity-service
     depends_on:
         - freeradius
     ports:
@@ -11,12 +18,7 @@ services:
     volumes:
       - ./freeradius/3.0:/etc/freeradius
 
-  freeradius:
-    image: freeradius/freeradius-server
-    ports:
-      - "1812:1812"
-    volumes:
-      - ./freeradius/3.0:/etc/freeradius
+
 
 
 
