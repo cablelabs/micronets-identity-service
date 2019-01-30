@@ -26,9 +26,9 @@
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
-    "docker-build": "docker build -t code.cablelabs.com:4567/micronets/identity-service .",
-    "docker-compose": "docker-compose up --build &",
-    "docker-publish": "docker login code.cablelabs.com:4567; docker push code.cablelabs.com:4567/micronets/identity-service"
+    "docker-build": "docker build -t community.cablelabs.com:4567/micronets-docker/micronets-identity-service .",
+    "docker-compose": "docker-compose up --build",
+    "docker-publish": "docker login community.cablelabs.com:4567; docker push code.cablelabs.com:4567/micronets-docker/micronets-identity-service"
   },
   "dependencies": {
     "@feathersjs/configuration": "^1.0.2",
