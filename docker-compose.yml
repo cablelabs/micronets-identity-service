@@ -10,7 +10,7 @@ services:
     build:
           context: ./
           dockerfile: Dockerfile
-    image: community.cablelabs.com:4567/micronets-docker/identity-service
+    image: community.cablelabs.com:4567/micronets-docker/micronets-identity-service
     depends_on:
         - freeradius
     ports:
