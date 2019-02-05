@@ -16,13 +16,14 @@ FREERAD_STORAGE_VOLUME=freeradius-volume-$INSTANCE_ID
 docker volume inspect $FREERAD_STORAGE_VOLUME > /dev/null 2>&1
 volume_exists=$?
 
-ID_CONTAINER_NAME=id-service-$INSTANCE_ID
+# TODO: Add a check to make sure the container isn't already running
+ID_CONTAINER_NAME=micronets-id-service-$INSTANCE_ID
 docker run -d -p $HOST_IDSERVICE_PORT:3230 \
 	--name $ID_CONTAINER_NAME \
 	--mount source=$FREERAD_STORAGE_VOLUME,target="/usr/src/app/freeradius/3.0" \
 	$DOCKER_REPO_HOSTPATH/micronets-identity-service \
 		|| exit 10
-echo "Started ID service container $ID_CONTAINER_NAME"
+echo "Started MIcronets ID service container $ID_CONTAINER_NAME"
 
 if [ $volume_exists -eq 1 ] ; then
    echo "Initializing the ID service certificates for volume $FREERAD_STORAGE_VOLUME (this might take a few minutes)..."
@@ -32,13 +33,19 @@ if [ $volume_exists -eq 1 ] ; then
    echo ""
 fi
 
-RADIUS_CONTAINER_NAME=freeradius-service-$INSTANCE_ID
+# TODO: Add a check to make sure the container isn't already running
+RADIUS_CONTAINER_NAME=micronets-freeradius-service-$INSTANCE_ID
 docker run -d -p $HOST_RADIUS_PORT:1812 \
 	--name $RADIUS_CONTAINER_NAME \
 	--mount source=$FREERAD_STORAGE_VOLUME,target="/etc/freeradius" \
 	$DOCKER_REPO_HOSTPATH/micronets-freeradius-service:latest \
 	|| exit 30
-echo "Started RADIUS container $ID_CONTAINER_NAME"
+echo "Started Micronets RADIUS container $RADIUS_CONTAINER_NAME"
 
 echo "Done!"
+
+# Note: To cleanup containers/volumes:
+#  docker container kill $RADIUS_CONTAINER_NAME $ID_CONTAINER_NAME
+#  docker container prune
+#  docker volume rm $FREERAD_STORAGE_VOLUME
 
