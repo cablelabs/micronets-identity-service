@@ -12,7 +12,7 @@ DOCKER_REPO_HOSTPATH=$DOCKER_REPO_HOST$DOCKER_REPO_PATH
 docker pull $DOCKER_REPO_HOSTPATH/micronets-identity-service || exit 4
 docker pull $DOCKER_REPO_HOSTPATH/micronets-freeradius-service || exit 6
 
-FREERAD_STORAGE_VOLUME=freeradius-volume-$INSTANCE_ID
+FREERAD_STORAGE_VOLUME=micronets-freeradius-vol-$INSTANCE_ID
 docker volume inspect $FREERAD_STORAGE_VOLUME > /dev/null 2>&1
 volume_exists=$?
 
