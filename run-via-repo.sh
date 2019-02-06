@@ -23,7 +23,7 @@ docker run -d -p $HOST_IDSERVICE_PORT:3230 \
 	--mount source=$FREERAD_STORAGE_VOLUME,target="/usr/src/app/freeradius/3.0" \
 	$DOCKER_REPO_HOSTPATH/micronets-identity-service \
 		|| exit 10
-echo "Started MIcronets ID service container $ID_CONTAINER_NAME"
+echo "Started Micronets ID service container $ID_CONTAINER_NAME"
 
 if [ $volume_exists -eq 1 ] ; then
    echo "Initializing the ID service certificates for volume $FREERAD_STORAGE_VOLUME (this might take a few minutes)..."
@@ -46,6 +46,6 @@ echo "Done!"
 
 # Note: To cleanup containers/volumes:
 #  docker container kill $RADIUS_CONTAINER_NAME $ID_CONTAINER_NAME
-#  docker container prune
+#  docker container prune -f
 #  docker volume rm $FREERAD_STORAGE_VOLUME
 
