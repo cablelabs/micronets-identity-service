@@ -125,6 +125,7 @@ client.vrfy: ca.pem client.pem
 ######################################################################
 index.txt:
 	@touch index.txt
+	@echo "unique_subject = no" > index.txt.attr
 
 serial:
 	@echo '01' > serial

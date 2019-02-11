@@ -1,4 +1,6 @@
 #!/bin/bash
+# set -x
+
 # TODO: Support these as parameters
 HOST_IDSERVICE_PORT=3230
 HOST_RADIUS_PORT=1812
@@ -18,10 +20,10 @@ volume_exists=$?
 
 # TODO: Add a check to make sure the container isn't already running
 ID_CONTAINER_NAME=micronets-id-service-$INSTANCE_ID
-docker run -d -p $HOST_IDSERVICE_PORT:3230 \
+docker run -d --rm -p $HOST_IDSERVICE_PORT:3230 \
 	--name $ID_CONTAINER_NAME \
 	--mount source=$FREERAD_STORAGE_VOLUME,target="/usr/src/app/freeradius/3.0" \
-	$DOCKER_REPO_HOSTPATH/micronets-identity-service \
+	$DOCKER_REPO_HOSTPATH/micronets-identity-service:latest \
 		|| exit 10
 echo "Started Micronets ID service container $ID_CONTAINER_NAME"
 
@@ -35,7 +37,7 @@ fi
 
 # TODO: Add a check to make sure the container isn't already running
 RADIUS_CONTAINER_NAME=micronets-freeradius-service-$INSTANCE_ID
-docker run -d -p $HOST_RADIUS_PORT:1812 \
+docker run -d --rm -p $HOST_RADIUS_PORT:1812 \
 	--name $RADIUS_CONTAINER_NAME \
 	--mount source=$FREERAD_STORAGE_VOLUME,target="/etc/freeradius" \
 	$DOCKER_REPO_HOSTPATH/micronets-freeradius-service:latest \
@@ -44,8 +46,8 @@ echo "Started Micronets RADIUS container $RADIUS_CONTAINER_NAME"
 
 echo "Done!"
 
-# Note: To cleanup containers/volumes:
-#  docker container kill $RADIUS_CONTAINER_NAME $ID_CONTAINER_NAME
-#  docker container prune -f
-#  docker volume rm $FREERAD_STORAGE_VOLUME
+echo "To stop the containers:"
+echo "  docker container kill $RADIUS_CONTAINER_NAME $ID_CONTAINER_NAME"
+echo "To clear the FreeRADIUS Storage Volume:"
+echo "  docker volume rm $FREERAD_STORAGE_VOLUME"
 
